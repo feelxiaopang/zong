@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+宝宝模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.BabyMapper">
+
+    <!--根据APP用户id查询账号对应的存储在数据库的宝宝对象-->
+    <select id="selectBabyCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from relation r,baby b where #{u_id}=r.u_id and r.baby_id=b.baby_id and b.db_status=0
+    </select>
+
+    <!-- 根据提供的 宝宝id 查询宝宝-->
+    <select id="selectBaby" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Baby">
+      SELECT  * from baby where baby_id = #{baby_id}
+  </select>
+    <select id="selectUsersBaby" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Baby">
+        SELECT  baby.*,re.r_level from relation re,baby baby where re.u_id = #{u_id} and baby.baby_id=re.baby_id and baby.db_status=0
+    </select>
+
+    <!--  修改宝宝信息-->
+    <update id="updateBabyInformatione" parameterType="com.DearBaby.www.entity.Baby">
+        update baby
+        <set>
+            <if test="baby_name != null and baby_name != ''">baby_name = #{baby_name},</if>
+            <if test="baby_birth != null and baby_birth != ''">baby_birth = #{baby_birth},</if>
+            <if test="baby_sex != null and baby_sex != ''">baby_sex = #{baby_sex},</if>
+            <if test="baby_blood != null and baby_blood != ''">baby_blood = #{baby_blood},</if>
+            <if test="baby_time != null and baby_time != ''">baby_time = #{baby_time},</if>
+            <if test="baby_height != null and baby_height != ''">baby_height = #{baby_height},</if>
+            <if test="baby_weight != null and baby_weight != ''">baby_weight = #{baby_weight},</if>
+            <if test="baby_code != null and baby_code != ''">baby_code = #{baby_code},</if>
+            <if test="db_status != null and db_status != ''">db_status = #{db_status},</if>
+            <if test="baby_photo != null and baby_photo != ''">baby_photo = #{baby_photo},</if>
+        </set>
+        where baby_id = #{baby_id}
+    </update>
+    <select id="selectLevlCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT count(*) from relation rel where rel.db_status=0 and  rel.baby_id=#{baby_id}
+    </select>
+
+    <select id="selectBabyCode" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from baby where baby_code = #{babyCode};
+    </select>
+
+    <insert id="addBaby" parameterType="com.DearBaby.www.entity.Baby">
+        insert into baby(baby_name,baby_birth,baby_sex,baby_code,baby_photo) values(#{baby_name},#{baby_birth},#{baby_sex},#{baby_code},#{baby_photo})
+    </insert>
+
+    <select id="selectNewBabyId" parameterType="com.DearBaby.www.entity.Baby" resultType="java.lang.Integer">
+        select baby_id from baby where baby_name = #{baby_name};
+    </select>
+
+    <insert id="addBabyRelation" parameterType="com.DearBaby.www.entity.Relation">
+        insert into relation(baby_id,u_id,r_level,r_name,db_status) values(#{baby_id},#{u_id},#{r_level},#{r_name},#{db_status})
+    </insert>
+
+    <!--  删除宝宝-->
+    <update id="deleteBaby">
+         update baby set db_status =1 where baby_id=#{0}
+    </update>
+
+    <select id="selectBabyRelation" parameterType="com.DearBaby.www.entity.Relation" resultType="java.lang.String">
+        select r_name from relation where baby_id=#{baby_id} and u_id=#{u_id} and db_status=0;
+    </select>
+
+</mapper>

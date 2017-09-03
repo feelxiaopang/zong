@@ -1,0 +1,84 @@
+/**
+ * Created by chenfumei on 2017/7/6.
+ */
+.bigDiv {
+    width: 85%;
+    min-width: 700px;
+    height: auto;
+    border-radius: 6px;
+    background: #ffe0d0;
+    margin: 0px auto;
+    vertical-align: middle;
+}
+
+.bigDiv1 {
+    width: 85%;
+    height: auto;
+    border-radius: 6px;
+    margin: 10px auto;
+    vertical-align: middle;
+}
+
+.smallDiv {
+    width: 95%;
+    height: 100%;
+    margin: 20px;
+}
+
+.inforAndOrder {
+    width: 100%;
+    min-width: 900px;
+    height: 145px;
+}
+
+.order, .information, .message {
+    float: left;
+    border-radius: 6px;
+    background: #ffe0d0;
+}
+
+.order {
+    width: 50%;
+    height: 143px;
+    text-align: center;
+    letter-spacing: 5px;
+    padding: 0px;
+    float: right;
+}
+
+.information {
+    width: 47%;
+    height: 143px;
+}
+
+.inforTable {
+    letter-spacing: 20px;
+    font-family: DFKai-SB;
+    font-size: 23px;
+    color: black;
+    line-height: 40px;
+    vertical-align: bottom;
+    margin: 4px auto
+}
+
+.orderUl{
+    letter-spacing: 20px;
+    font-family: DFKai-SB;
+    font-size: 23px;
+    color: black;
+    line-height: 40px;
+    vertical-align: bottom;
+    margin: 4px auto
+}
+
+.message {
+    width: 100%;
+    min-width: 900px;
+    height: 330px;
+    margin: 25px 20px 20px 0px;
+}
+
+.badge {
+    background: red;
+    opacity: 0.5;
+}

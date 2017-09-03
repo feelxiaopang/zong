@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+管理员模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.PowerMapper">
+
+    <!--根据传入参数查找出管理员的权限名称-->
+    <select id="selectPowerName" parameterType="java.lang.Integer" resultType="String">
+        select DISTINCT p.p_name FROM rolepower pr,power p where pr.p_id=p.p_id and pr.r_id=#{r_id}
+    </select>
+
+    <!--查询所有权限-->
+    <select id="selectAllPower" resultType="com.DearBaby.www.entity.Power">
+        select * FROM power
+    </select>
+    <!--查询所有权限-->
+    <select id="selectOnePower" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Power">
+        select po.* FROM power po,rolepower pr where po.p_id=pr.p_id and pr.r_id=#{r_id} and po.father_id=0
+    </select>
+    <!--查看管理员的子权限-->
+    <select id="selectChildPower" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Power">
+        select po.* FROM power po,rolepower pr where po.p_id=pr.p_id and pr.r_id=#{r_id} and po.father_id=#{father_id}
+    </select>
+
+    <!--查看管理员的角色子权限-->
+    <select id="selectAdminInRolePower" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Power">
+        select po.* FROM power po,rolepower pr where po.p_id=pr.p_id and pr.r_id=#{r_id} and po.father_id=1
+    </select>
+
+    <!--通过角色名 查询角色权限-->
+    <select id="selectRolePower" parameterType="java.lang.String" resultType="com.DearBaby.www.entity.Power">
+       select p.* from role r,power p,rolepower rp where r.r_id = rp.r_id and rp.p_id=p.p_id and r.r_name=#{r_name}  ORDER BY p.father_id,p.p_id;
+    </select>
+</mapper>

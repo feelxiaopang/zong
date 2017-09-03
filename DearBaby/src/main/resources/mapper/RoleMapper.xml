@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+管理员模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.RoleMapper">
+
+    <!--根据管理员账号查询角色名称-->
+    <select id="selectAdminPersonalInformation" parameterType="com.DearBaby.www.entity.Admins"
+            resultType="com.DearBaby.www.entity.Role">
+        select * from role where r_id = (select r_id from admins where a_name=#{a_name})
+     </select>
+
+    <!--根据传入参数查找出管理员的角色名称-->
+    <select id="selectRoleRName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select r_name FROM role where r_id=#{r_id}
+    </select>
+
+    <!--查询所有角色-->
+    <select id="selectAllRole" resultType="com.DearBaby.www.entity.Role">
+        select * from role where r_status = 1
+</select>
+
+    <!--新增角色-->
+    <insert id="addRole" parameterType="com.DearBaby.www.entity.Role" statementType="PREPARED" keyProperty="r_id"
+            useGeneratedKeys="true">
+        insert into role(r_level,r_name) values(#{r_level},#{r_name})
+    </insert>
+
+    <!--通过角色id查询角色名字-->
+    <select id="queryRoleName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select r_name FROM role where r_id=#{0}
+    </select>
+
+
+
+
+
+    <!--根据传入参数查询角色名称是否存在-->
+    <select id="selectRoleName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) FROM role where r_name=#{r_name}
+    </select>
+
+    <!--通过角色名称查询角色id-->
+    <select id="selectRoleID" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select r_id FROM role where r_name=#{r_name}
+    </select>
+    <!--  通过角色id 和权限id 添加rolepower表-->
+    <insert id="addRolePower" >
+        insert into rolepower(p_id,r_id) values(#{0},#{1})
+    </insert>
+
+    <!--通过角色id 删除 rolepower 表-->
+    <delete id="removeRolePower" parameterType="java.lang.Integer">
+        DELETE  from rolepower where r_id= #{0};
+    </delete>
+
+    <!--通过角色id 软删除角色表-->
+    <update id="removeRole" parameterType="java.lang.Integer">
+        UPDATE  role  SET r_status= 0  where r_id= #{0};
+    </update>
+    <!--查询所有角色对应的权限-->
+    <select id="queryRolePower" resultType="com.DearBaby.www.entity.RolePower" >
+      select r.r_id as r_id,p.p_name as p_name ,p.p_id as p_id,p.father_id as father_id from role r,power p,rolepower rp where r.r_id = rp.r_id and rp.p_id=p.p_id
+    </select>
+    <!--通过id修改角色-->
+    <update id="modifyRole" parameterType="com.DearBaby.www.entity.Role"  statementType="PREPARED">
+        update role
+        <set>
+            <if test="r_name != null and r_name != ''">r_name = #{r_name},</if>
+            <if test="r_level !=null">r_level = #{r_level},</if>
+        </set>
+        where r_id = #{r_id}
+    </update>
+
+<!--    通过搜索 查询角色-->
+ <select id="searchRole" parameterType="java.lang.String" resultType="com.DearBaby.www.entity.Role">
+     select *  from role where r_status = 1 and r_name regexp #{r_name}
+ </select>
+
+</mapper>

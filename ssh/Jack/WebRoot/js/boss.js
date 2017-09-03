@@ -1,0 +1,47 @@
+$("#sa1").css("background-color","skyblue");
+$("#woup1").css("display","block");
+$("#woup2").css("display","none");
+$("#woup3").css("display","none");
+$("#woup4").css("display","none");
+$("#sa1").click(function(){
+	$("#sa1").css("background-color","orange");
+	$("#sa2").css("background-color","pink");
+	$("#sa3").css("background-color","pink");
+	$("#sa4").css("background-color","pink");
+	$("#woup1").css("display","block");
+	$("#woup2").css("display","none");
+	$("#woup3").css("display","none");
+	$("#woup4").css("display","none");
+})
+$("#sa2").click(function(){
+	$("#sa1").css("background-color","pink");
+	$("#sa2").css("background-color","orange");
+	$("#sa3").css("background-color","pink");
+	$("#sa4").css("background-color","pink");
+	$("#woup1").css("display","none");
+	$("#woup2").css("display","block");
+	$("#woup3").css("display","none");
+	$("#woup4").css("display","none");
+})
+$("#sa3").click(function(){
+	$("#sa1").css("background-color","pink");
+	$("#sa2").css("background-color","pink");
+	$("#sa3").css("background-color","orange");
+	$("#sa4").css("background-color","pink");
+	$("#woup1").css("display","none");
+	$("#woup2").css("display","none");
+	$("#woup3").css("display","block");
+	$("#woup4").css("display","none");
+	
+})
+$("#sa4").click(function(){
+	$("#sa1").css("background-color","pink");
+	$("#sa2").css("background-color","pink");
+	$("#sa3").css("background-color","pink");
+	$("#sa4").css("background-color","orange");
+	$("#woup1").css("display","none");
+	$("#woup2").css("display","none");
+	$("#woup3").css("display","none");
+	$("#woup4").css("display","block");
+	
+})

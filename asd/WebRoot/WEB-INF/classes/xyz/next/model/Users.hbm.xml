@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<!-- 根节点 package：包，如果class节点中name只有名称 则在包中找User -->
+<hibernate-mapping package="xyz.next.model">
+
+	<!-- 子节点:类与表映射关系  name代表类名 ，table代表表名-->
+    <class name="Users" table="Users">
+    	<!-- 主键节点   name代表类中主键名 ，column代表表中主键字段名-->
+        <id name="id" column="id">
+        	<!-- 主键生成策略 -->
+            <generator class="native"/>
+        </id>
+		<!-- 字段节点 name代表类中属性名 ，type代表类中数据类型（自动配置数据库中的类型），column代表表中字段名-->
+        
+        <property name="username" type="string" column="username"/>
+        <property name="password" type="string" column="password"/>
+         <property name="nickname" type="string" column="nickname"/>
+		<!-- <many-to-one name="group" class="Group" column="groupId"></many-to-one> -->
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+>
+
+    <context:property-placeholder location="/WEB-INF/config/jdbc.properties"/>
+    <bean id="dataSource"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${driverClass}"/>
+        <property name="jdbcUrl" value="${jdbcUrl}"/>
+        <property name="user" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="minPoolSize" value="${minPoolSize}"/>
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+        <property name="initialPoolSize" value="${initialPoolSize}"/>
+        <property name="maxIdleTime" value="${maxIdleTime}"/>
+        <property name="acquireIncrement" value="${acquireIncrement}"/>
+        <property name="maxStatements" value="${maxStatements}"/>
+        <property name="idleConnectionTestPeriod" value="${idleConnectionTestPeriod}"/>
+        <property name="acquireRetryAttempts" value="${acquireRetryAttempts}"/>
+        <property name="breakAfterAcquireFailure" value="${breakAfterAcquireFailure}"/>
+        <property name="testConnectionOnCheckout" value="${testConnectionOnCheckout}"/>
+    </bean>
+    <bean id="mySessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置 xml -->
+        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.DearBaby.www.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="mySessionFactory"/>
+    </bean>
+    <!-- 开启事物-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <context:component-scan base-package="com.DearBaby.www.service"/>
+
+    <!-- 切面 -->
+    <aop:config>
+        <aop:pointcut id="etcCut"
+                      expression="execution(* com.DearBaby.www.service.impl.*.*(..))"/>
+
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="etcCut"/>
+    </aop:config>
+
+    <!-- 讲事务和aop设置的切入点连接 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- 配置事务回滚
+              spring事务默认只对运行时异常进行回滚
+              -->
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="modify*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="change*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="query*" propagation="NOT_SUPPORTED" isolation="READ_COMMITTED"/>
+            <!-- 配置不需要启用事务 只读  -->
+            <tx:method name="find*" propagation="NOT_SUPPORTED" isolation="READ_COMMITTED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+</beans>

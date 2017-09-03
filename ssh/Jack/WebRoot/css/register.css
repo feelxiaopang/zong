@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+*{
+	margin:0px;
+	padding:0px;
+	margin:0 auto;
+	list-style-type:none;
+	font-family:宋体;
+}
+.total1{
+	width:100%;
+	height:140px;
+	text-align: center;
+	background-color: fuchsia;
+}
+.total1 h1{
+	font-size: 100px;
+	color:maroon;
+}
+.middle{
+	border:1px solid black;
+	width:340px;
+	height:370px;
+	background-color: aqua;
+	box-shadow:3px 8px 16px 7px rgba(0,0,0,0.8);
+}
+.zhan{
+	width:200px;
+	height:30px;
+	margin-top: 40px;
+}
+.mim{
+	width:200px;
+	height:30px;
+	margin-top: 25px;
+}
+.subm{
+	width:180px;
+	height:40px;
+	background-color: skyblue;
+	margin-left: 45px;
+	margin-top: 25px;
+}
+a{
+	text-decoration: none;
+	color:maroon;
+}
+.asa{
+	float: right;
+}

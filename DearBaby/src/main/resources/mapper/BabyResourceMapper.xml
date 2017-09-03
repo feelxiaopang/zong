@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+育儿资源 mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.BabyResourceMapper">
+
+    <!-- 查询育儿资源类型总数量-->
+    <select id="selectBabyResourceTypesCounts" resultType="java.lang.Integer">
+        select count(*) from baby_resource_type
+    </select>
+    <!--查询所有育儿资源类型及其父级类型名称 -->
+    <select id="selectBabyResourceTypes" resultType="com.DearBaby.www.entity.BabyResourceType">
+        select brt.brt_id,brt.brt_type,x.first_father,y.second_father,z.third_father from ((baby_resource_type brt
+           left join
+          (select a.*,b.brt_type first_father from baby_resource_type a,baby_resource_type b where a.brt_first_father = b.brt_id)x
+              on brt.brt_id = x.brt_id)
+           left join
+          (select a.*,b.brt_type second_father from baby_resource_type a,baby_resource_type b where a.brt_second_father = b.brt_id)y
+              on brt.brt_id = y.brt_id)
+           left join
+          (select a.*,b.brt_type third_father from baby_resource_type a,baby_resource_type b where a.brt_third_father = b.brt_id)z
+              on brt.brt_id = z.brt_id
+    </select>
+    <!--查询类型名称是否重复 -->
+    <select id="selectBabyResourceTypeByName" resultType="com.DearBaby.www.entity.BabyResourceType">
+        select * from baby_resource_type where brt_type = #{0}
+    </select>
+    <!--新增资源类型 -->
+    <insert id="insertBabyResourceType" parameterType="com.DearBaby.www.entity.BabyResourceType">
+        insert into baby_resource_type(brt_type,brt_first_father,brt_second_father,brt_third_father)
+        values(#{brt_type},#{first_father},#{second_father},#{third_father})
+    </insert>
+    <!--删除资源类型 -->
+    <delete id="deleteBabyResourceType" parameterType="list">
+        delete from baby_resource_type
+        <where>
+            brt_id in
+            <foreach collection="list" item="item" index="index"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+          or brt_first_father in
+            <foreach collection="list" item="item" index="index"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            or brt_second_father in
+            <foreach collection="list" item="item" index="index"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            or brt_third_father in
+            <foreach collection="list" item="item" index="index"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+
+
+
+</mapper>

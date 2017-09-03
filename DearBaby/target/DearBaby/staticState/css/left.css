@@ -1,0 +1,31 @@
+/**
+ * Created by chenfumei on 2017/7/6.
+ */
+.left {
+    width: 95%;
+    height: 612px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    margin: 5px 5px 0px 7px;
+    border-radius: 6px;
+}
+
+.mainMenu {
+    font-size: 20px;
+    border-radius: 20px;
+}
+
+.menuLi {
+    border-radius: 20px;
+    background: #ffe0d0;
+}
+
+.menuLi a:hover {
+    opacity: 0.7;
+    border-radius: 20px;
+}
+
+.left ul li a:link{
+    border-radius: 20px;
+}

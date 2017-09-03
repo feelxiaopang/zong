@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+管理员模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.AdminMapper">
+
+    <!--根据管理员账号查询账号对应的存储在数据库的随机字符-->
+    <select id="selectAdminsRnumByName" parameterType="java.lang.String" resultType="java.lang.String">
+        select a_random from admins where a_name=#{str}
+    </select>
+
+    <!--根据账号密码查询管理员对象-->
+    <select id="selectAdmins" parameterType="com.DearBaby.www.entity.Admins" resultType="com.DearBaby.www.entity.Admins">
+        select * FROM admins where  a_name=#{a_name} and a_password=#{a_password}
+    </select>
+
+    <!-- 根据id修改该管理员密码-->
+    <update id="updatePassword" parameterType="com.DearBaby.www.entity.Admins">
+        update admins set a_password = #{a_password} ,a_random = #{a_random} where a_id = #{a_id}
+    </update>
+
+    <!--根据跳入网页查询所有管理员对象-->
+    <select id="selectAllAdmins"  resultType="java.lang.String">
+        select COUNT(1) FROM admins ad,role ro where r_status=1 and ad.r_id=ro.r_id
+    </select>
+
+    <!--根据传入验证页面传入的账号是否存在-->
+    <select id="selectOneAdmins" parameterType="java.lang.String" resultType="com.DearBaby.www.entity.Admins">
+        select * FROM admins where a_name=#{updatename}
+    </select>
+
+    <!--根据传入验证页面传入的账号是否存在-->
+    <insert  id="addAmin" parameterType="com.DearBaby.www.entity.Admins">
+        insert into admins(a_name,a_password,a_random,r_id)
+		values(#{a_name},#{a_password},#{a_random},#{r_id})
+    </insert >
+
+    <!--根据传入参数修改管理员部分信息-->
+    <select id="updateAdmin" parameterType="com.DearBaby.www.entity.Admins">
+      	update admins set  r_id = #{r_id}
+        <if test="a_name != null and a_name!=''">
+            <![CDATA[ ,a_name = #{a_name} ]]>
+        </if>
+        where
+		a_id = #{a_id}
+    </select>
+
+    <!--根据传入参数删除管理员-->
+    <delete id="removeAdmin" parameterType = "java.util.List">
+        delete from admins where a_id in
+            <foreach collection="list"  index="index" item="str" open="(" separator="," close=")"  >
+                #{str}
+            </foreach>
+    </delete>
+
+    <!--根据传入参数修改管理员部分信息-->
+    <select id="selectAdmin" parameterType="java.util.HashMap" resultType="com.DearBaby.www.entity.Admins">
+        select DISTINCT ad.* FROM admins ad,role ro,power po,rolepower rp
+        WHERE ad.r_id=ro.r_id and rp.r_id=ro.r_id and rp.p_id=po.p_id and ro.r_status=1
+            <if test="querya_name != null and querya_name!=''">
+                <![CDATA[ and ad.a_name regexp #{querya_name} ]]>
+            </if>
+            <if test="queryr_name != null and queryr_name!=''">
+                <![CDATA[ and ro.r_id in (select r_id from role where r_name regexp #{queryr_name})  ]]>
+            </if>
+            <if test="queryp_name != null and queryp_name!=''">
+                <![CDATA[ and po.p_name regexp #{queryp_name} ]]>
+            </if>
+    </select>
+
+    <!--根据跳入网页查询所有管理员对象-->
+    <select id="selectBackgroundUser" resultMap="userMapVisit">
+       select DISTINCT ad.a_id,ro.r_name,ad.a_name,po.p_name FROM admins ad,role ro,power po,rolepower rp
+        WHERE ad.r_id=ro.r_id and rp.r_id=ro.r_id and rp.p_id=po.p_id and ro.r_status=1 and ad.a_id IN(SELECT a_id from admins ) ORDER BY ad.a_name
+        </select>
+    <!-- 结果映射集 -->
+    <resultMap id="userMapVisit" type="com.DearBaby.www.entity.BackgroundUser">
+        <id property="a_id" column="a_id" />
+        <result property="r_name" column="r_name" />
+        <result property="a_name" column="a_name" />
+        <!-- 子标记 property User中的一个属性 javaType 属性的java类型 column 主键 ofType 集合中的数据类型 -->
+        <collection property="p_name" javaType="ArrayList"
+                    column="p_name" ofType="java.lang.String">
+            <result property="p_name" column="p_name" />
+        </collection>
+    </resultMap>
+
+</mapper>

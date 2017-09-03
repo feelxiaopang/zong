@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+	<struts>
+	<!-- 将对象交给spring管理 -->  
+    <constant name="struts.objectFactory" value="spring" />
+    <!-- 指定默认编码集 -->  
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>  
+    <!-- 动态加载 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <!-- 开发者模式 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 请求后缀 -->
+    <constant name="struts.action.extension" value="action,," />
+	<!-- 修改注解后，自动加载 -->
+    <constant name=" struts.convention.classes.reload" value="true"/>
+    <!-- 注解包扫描 -->
+    <constant name="struts.convention.package.locators" value="action,actions,struts,struts2,controller"/>  
+	<!-- 允许使用OGNL访问静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>  
+ 	<!-- 当struts的配置文件修改后，系统是否自动重新加载该文件，默认为false，开发阶段应打开 -->  
+    <constant name="struts.configuration.xml.reload" value="true"></constant>
+    		<!-- 设置整个包的全局的一个result -->  
+<!--  <package name="testdefault" namespace="/" extends="struts-default">
+<global-results>  
+<result name="first">/views/head.jsp</result>  
+</global-results> 
+<global-allowed-methods>regex:.*</global-allowed-methods>	 
+</package> 		 -->
+    <!-- <constant name="struts.convention.exclude.packages" value="org.apache.struts.*,org.springframework.web.struts.*,org.springframework.web.struts2.*,org.hibernate.*"/> -->
+</struts>
+
+<!-- END SNIPPET: xworkSample -->
+

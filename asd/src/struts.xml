@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+   <struts>
+	  	 <!-- 指定默认编码集 -->  
+	    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+		<!-- 指定需要Struts2处理的请求后缀 -->
+		<constant name="struts.action.extension" value="action"></constant>    
+		<!-- 允许使用OGNL访问静态方法 -->
+		<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>  
+	 	<!-- 当struts的配置文件修改后，系统是否自动重新加载该文件，默认为false，开发阶段应打开 -->  
+	    <constant name="struts.configuration.xml.reload" value="true"></constant>
+	    <!-- 开发模式下使用，可以打印出更详细的错误信息 -->  
+	    <constant name="struts.devMode" value="true"></constant>
+	    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    
+	   	<package name="default" namespace="/" extends="struts-default">
+			   	
+           
+       	 	<global-allowed-methods>regex:.*</global-allowed-methods>
+       	 	<!-- 登录 -->
+	   		<action name="login" class="xyz.next.action.LoginAction">
+	   			<result name="success">views/success.jsp</result>
+	   			<result name="error">views/error.jsp</result>
+	   			
+	   		</action>
+	   		<!-- 注册 -->
+	   		<action name="register" class="xyz.next.action.RegisterAction">
+	   			<result name="success">views/success.jsp</result>
+	   			<result name="error">views/error.jsp</result>
+	   			
+	   		</action>
+	  <!--分页--> 
+     	<action name="paged" class="xyz.next.action.PageAction">  
+            <result name="success">views/pagess.jsp</result>
+             
+        </action>
+      
+	   	</package>
+   </struts>

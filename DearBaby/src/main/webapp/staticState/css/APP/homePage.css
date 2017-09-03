@@ -1,0 +1,124 @@
+#myBut, .mui-title {
+    color: white;
+}
+
+#myBut {
+    text-decoration: underline;
+}
+
+#head {
+    background-color: orange;
+}
+
+#iconRight {
+    color: white;
+    font-size: 28px;
+    padding-top: 6px;
+}
+
+.HeadPortrait{
+    height: 40px;
+    position: absolute;
+    bottom:13px;
+    left: 5px;
+    padding: 0px;
+}
+
+.picture{
+    width: 38px;
+    height: 100%;
+    float: left;
+    display: inline-block;
+    border-radius: 50%;
+    border: 2.5px solid white;
+}
+
+.birthToToday{
+    float: left;
+    font-size: 14px;
+    color: white;
+    line-height: 40px;
+    display: inline-block;
+}
+
+.babyMenu {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    list-style: none;
+
+    background: #dfdfdf;
+}
+
+.babyMenu li {
+    width: 16.667%;
+    height: 100%;
+    float: left;
+}
+
+.menuA {
+    width: 100%;
+    height: 100%;
+}
+
+.menuDiv {
+    width: 80%;
+    height: 85%;
+    text-align: center;
+}
+
+.bigThing {
+    width: 100%;
+    margin-top: -10px;
+    bottom: 0px;
+    padding: 0px;
+    background: #f1f1f1;
+}
+
+.timeAndThing{
+    width: 100%;
+    height: auto;
+}
+
+.leftTime {
+    width: 14%;
+    height: 100%;
+    float: left;
+}
+
+.rightWord {
+    width: 82%;
+    float: left;
+    margin-left: 7px;
+    padding:1px;
+}
+
+.timeLine {
+    width: 1px;
+    height: 100%;
+    display: inline-block;
+    margin-left: 7%;
+    position: absolute;
+    border-left: 1px solid #c3c3c3;
+    /*#c3c3c3*/
+}
+
+.detailedTime {
+    width: 65px;
+    height: 55px;
+    position: absolute;
+    margin-top: 15px;
+    text-align: center;
+    background: #f1f1f1;
+}
+
+.dayLabel {
+    width: 97%;
+    height: 45%;
+    margin-left: 6%;
+    padding: 4px 5px 4px 2px;
+}
+
+.mui-card-content{
+    word-wrap:break-word;
+}

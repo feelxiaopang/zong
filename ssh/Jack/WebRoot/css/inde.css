@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+*{
+	margin:0px;
+	padding:0px;
+	margin:0 auto;
+	list-style-type:none;
+	font-family:宋体;
+}
+.total{
+	width:100%;
+	height:140px;
+	text-align: center;
+	background-color: fuchsia;
+}
+.total h1{
+	font-size: 100px;
+	color:maroon;
+}
+.nexx{
+	width:100%;
+	min-height:400px;
+	text-align:center;
+	background-color: silver;
+}
+.nexx h1{
+	font-size: 77px;
+	color: teal;
+	background-color: pink;
+}
+a{
+	text-decoration: none;
+}

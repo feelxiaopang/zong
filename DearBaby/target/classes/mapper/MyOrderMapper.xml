@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+管理员模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.MyOrderMapper">
+
+    <!--查询所有订单信息-->
+    <select id="selectMyOrder" resultType="com.DearBaby.www.entity.MyOrder">
+        select m.order_id,m.order_status,m.order_num,m.order_time,m.db_status,a.address,a.zipcode,a.consignee,a.tel from myOrder m,address a where m.address_id = a.address_id
+    </select>
+
+    <!--查询最新订单信息-->
+    <select id="selectNewOrder" resultType="com.DearBaby.www.entity.MyOrder">
+        select m.order_id,m.order_status,m.order_num,m.order_time,m.db_status,a.address,a.zipcode,a.consignee,a.tel from myOrder m,address a where m.address_id = a.address_id and (TO_SECONDS(NOW())-TO_SECONDS(m.order_time))&lt;(60*60*24)
+    </select>
+
+    <!--查询今日订单信息-->
+    <select id="selectTodayOrder" resultType="com.DearBaby.www.entity.MyOrder">
+        select * from (select m.order_id,m.order_status,m.order_num,m.order_time,m.db_status,a.address,a.zipcode,a.consignee,a.tel from myOrder m,address a where m.address_id = a.address_id) allOrder where to_days(allOrder.order_time) = to_days(now())
+    </select>
+
+    <!--查询未处理订单信息-->
+    <select id="selectUntreatedOrder" resultType="com.DearBaby.www.entity.MyOrder">
+        select m.order_id,m.order_status,m.order_num,m.order_time,m.db_status,a.address,a.zipcode,a.consignee,a.tel from myOrder m,address a where m.address_id = a.address_id and m.order_status = 1 or m.order_status = 2
+    </select>
+
+</mapper>

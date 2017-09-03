@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+前台用户mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.AppUsersMapper">
+    <!-- 查询appUsers的总数量-->
+    <select id="selectAppUsersCounts" resultType="java.lang.Integer">
+        select count(*) from app_users where u_status != 3
+    </select>
+    <!-- 分页查询所有的appUsers -->
+    <select id="selectAllAppUsers" resultType="com.DearBaby.www.entity.AppUsers">
+        select u_id,insert(u_pNumber,4,4,'****')u_pNumber,u_name,u_status,u_date from app_users where u_status != 3 order by u_date desc limit #{0},#{1}
+    </select>
+    <!-- 条件查询 符合条件的AppUsers 总数量-->
+    <select id="selectConditionAppUsersCounts" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*) from app_users where 1 = 1
+        <if test="u_pNumber!=null and u_pNumber!=''">
+            AND u_pNumber regexp #{u_pNumber}
+        </if>
+        <if test="u_name!=null and u_name!=''">
+            AND u_name regexp #{u_name}
+        </if>
+        <if test="u_status==0">
+            AND u_status != 3
+        </if>
+        <if test="u_status==1||u_status==2">
+            AND u_status = #{u_status}
+        </if>
+        <if test="(beginDate!=null and beginDate!='') and (endDate!=null and endDate!='')">
+            AND u_date BETWEEN #{beginDate} and #{endDate}
+        </if>
+    </select>
+    <!-- 条件查询 符合条件的AppUsers-->
+    <select id="selectConditionAppUsers" parameterType="java.util.HashMap" resultType="com.DearBaby.www.entity.AppUsers">
+        select u_id,insert(u_pNumber,4,4,'****')u_pNumber,u_name,u_status,u_date from app_users where 1 = 1
+        <if test="u_pNumber!=null and u_pNumber!=''">
+            AND u_pNumber regexp #{u_pNumber}
+        </if>
+        <if test="u_name!=null and u_name!=''">
+            AND u_name regexp #{u_name}
+        </if>
+        <if test="u_status==0">
+            AND u_status != 3
+        </if>
+        <if test="u_status==1||u_status==2">
+            AND u_status = #{u_status}
+        </if>
+        <if test="(beginDate!=null and beginDate!='') and (endDate!=null and endDate!='')">
+            AND u_date BETWEEN #{beginDate} and #{endDate}
+        </if>
+         order by u_date desc limit #{offset},#{pageSize}
+    </select>
+
+    <!-- 更改AppUsers 的 u_status 字段状态 -->
+    <update id="updateAppUsersStatus" parameterType="com.DearBaby.www.entity.AppUsers" >
+          update app_users set u_status = #{1} where u_id = #{0}
+    </update>
+    <!-- 查询单个appUsers的信息以及详细信息-->
+    <resultMap id="inforMap" type="com.DearBaby.www.entity.Information">
+        <id property="infor_id" column="infor_id"></id>
+        <result property="infor_sex" column="infor_sex"></result>
+        <result property="infor_birth" column="infor_birth"></result>
+        <result property="infor_address" column="infor_address"></result>
+        <result property="infor_signature" column="infor_signature"></result>
+        <association property="appUsers" column="u_id" javaType="com.DearBaby.www.entity.AppUsers">
+            <id property="u_id" column="u_id"></id>
+            <result property="u_pNumber" column="u_pNumber"></result>
+            <result property="u_name" column="u_name"></result>
+            <result property="u_photo" column="u_photo"></result>
+            <result property="u_password" column="u_password"></result>
+            <result property="u_random" column="u_random"></result>
+            <result property="u_status" column="u_status"></result>
+            <result property="u_date" column="u_date"></result>
+        </association>
+    </resultMap>
+    <select id="selectAppUserInformation"  resultMap="inforMap">
+        select * from app_users INNER JOIN information on app_users.u_id = information.u_id where app_users.u_id = #{0}
+    </select>
+    <!-- 查询单个用户 通过id -->
+    <select id="selectAppUsersById"  resultType="com.DearBaby.www.entity.AppUsers">
+        select * from app_users where u_id = #{0}
+    </select>
+    <!-- 修改用户密码 -->
+    <update id="updateAppUsersPassword" parameterType="com.DearBaby.www.entity.AppUsers">
+        update app_users set u_password = #{u_password} ,u_random = #{u_random} where u_id = #{u_id}
+    </update>
+    <!-- 逻辑删除-->
+    <update id="updateAppUsersStatusByList" parameterType="list">
+        update app_users set u_status = 3
+        <where>
+            u_id in
+            <foreach collection="list" item="item" index="index"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <!-- 插入 符合条件的AppUsers-->
+    <insert id="insertAppUsers"  parameterType="com.DearBaby.www.entity.AppUsers" >
+       insert into app_users(u_pNumber,u_password,u_random,u_name,u_photo)
+		values(#{u_pNumber},#{u_password},#{u_random},#{u_name},#{u_photo})
+    </insert>
+    <!-- 插入个人信息的表ID-->
+    <insert id="insertinformation"  parameterType="java.lang.Integer" >
+        insert into information(u_id)
+        values(#{u_id})
+    </insert>
+    <!--根据传入验证页面传入的账号是否存在-->
+    <select id="selectOneAppUser" parameterType="java.lang.String" resultType="com.DearBaby.www.entity.AppUsers">
+        select * FROM app_users where u_pNumber=#{updatename}
+    </select>
+    <!--根据C传入的账号密码验证-->
+    <select id="selectAppUsers" parameterType="com.DearBaby.www.entity.AppUsers" resultType="com.DearBaby.www.entity.AppUsers">
+        select * FROM app_users where u_pNumber=#{u_pNumber} and u_password=#{u_password}
+    </select>
+
+
+    <!--查询用户插入的随机字符-->
+    <select id="selectAppUserRandom" parameterType="java.lang.String" resultType="java.lang.String">
+        select u_random FROM app_users where u_pNumber=#{u_pNumber}
+    </select>
+    <update id="updateAppUserInformation" parameterType="com.DearBaby.www.entity.AppUsers">
+ update app_users set u_photo = #{u_photo} where u_id = #{u_id}
+    </update>
+
+</mapper>

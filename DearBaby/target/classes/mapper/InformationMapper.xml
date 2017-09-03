@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+前台用户mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.InformationMapper">
+
+    <!-- 插入个人信息的表ID-->
+    <insert id="insertInformation"  parameterType="java.lang.Integer" >
+        insert into information(u_id)
+        values(#{u_id})
+    </insert>
+
+
+
+
+
+    <!-- 修改个人信息-->
+    <update id="updateInformation"  parameterType="com.DearBaby.www.entity.Information" >
+        update  information
+        <set>
+        <if test="infor_sex != null and infor_sex!=''">
+          infor_sex = #{infor_sex},
+        </if>
+        <if test="infor_birth != null and infor_birth!=''">
+           infor_birth = #{infor_birth},
+        </if>
+        <if test="infor_address != null and infor_address!=''">
+            infor_address = #{infor_address},
+        </if>
+        <if test="infor_signature != null and infor_signature!=''">
+            infor_signature = #{infor_signature},
+        </if>
+        </set>
+         WHERE infor_id=#{infor_id}
+
+    </update>
+
+    <!-- 修改个人信息-->
+    <update id="updateAppUsersNaem"  parameterType="com.DearBaby.www.entity.AppUsers" >
+        update  app_users set u_name=#{u_name} WHERE u_id=#{u_id}
+
+    </update>
+</mapper>

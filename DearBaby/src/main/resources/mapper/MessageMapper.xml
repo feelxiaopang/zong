@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+系统消息模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.MessageMapper">
+
+    <!--查询所有系统消息-->
+    <select id="selectAllMessage" resultType="com.DearBaby.www.entity.Message">
+        select * from message
+    </select>
+
+
+
+</mapper>

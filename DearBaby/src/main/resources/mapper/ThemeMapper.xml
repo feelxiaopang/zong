@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+信息管理模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.ThemeMapper">
+    <!--查询社区信息-->
+    <select id="selectTheme" resultType="com.DearBaby.www.entity.Theme">
+        select * from theme limit #{0},#{1}
+    </select>
+    <!--修改社区信息-->
+<update id="updateTheme" parameterType="com.DearBaby.www.entity.Theme">
+    UPDATE theme set theme_type=#{theme_type} where theme_id=#{theme_id}
+</update>
+    <select id="selectOneTheme" parameterType="com.DearBaby.www.entity.Theme" resultType="com.DearBaby.www.entity.Theme">
+    select * from theme where theme_type=#{theme_type}
+    <if test="theme_id != null and theme_id!=''">
+        <![CDATA[ and theme_id=#{theme_id} ]]>
+    </if>
+    </select>
+    <delete id="deleteTheme" parameterType = "java.util.List">
+        delete from theme where theme_id in
+        <foreach collection="list"  index="index" item="str" open="(" separator="," close=")"  >
+            #{str}
+        </foreach>
+    </delete>
+    <insert id="addTheme" parameterType="com.DearBaby.www.entity.Theme">
+insert into theme(theme_type) value(#{theme_type})
+    </insert>
+    <!--查询社区总数-->
+    <select id="selectThemeCounts" resultType="java.lang.Integer">
+        select count(*) from theme
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+管理员模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.PhotoMapper">
+
+    <!--根据宝宝id查询对应的存储在数据库的相片-->
+    <select id="selectNearPhoto" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Photo">
+        select * from photo where baby_id=#{baby_id} and db_status=0 group by photo_date limit 100
+    </select>
+
+    <!--根据宝宝id查询对应的存储在数据库的相片-->
+    <select id="selectAllPhoto" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Photo">
+        select * from photo where baby_id=#{baby_id} and db_status=0
+    </select>
+
+
+</mapper>

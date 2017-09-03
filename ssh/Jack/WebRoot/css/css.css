@@ -1,0 +1,96 @@
+		.head{
+			background-color:#8EE5EE;width:100%;height:100px;
+			
+			
+		}
+		input{border:none;outline:medium;}
+		input{border:1px solid gray;}
+		.div_logo{
+			width:250px;height:80px;float: left;margin-top:20px;
+		}
+		.div_logo a{
+			font-size: 50px;color:#21A900;margin-top:20px;
+			text-decoration: none;
+		}
+		.p2{
+			margin-top:-50px;color:#DFDFDF;margin-left:20px;
+		}
+		.div_ul{
+			margin-left:800px;width:200px;height:80px;float: left;
+		}
+		.ul{
+			list-style-type:none;margin-top:40px;
+		}
+		.ul li{
+			float:left;width:50px;font-size: 20px;color:#666666;
+			text-align:center;
+		}
+		.ul li:hover{
+			background-color: #FFFFFF;
+		}
+		.div_1{
+			width:1340px;height:100px;
+			border:1px solid blue;
+		}
+		.div_1_p{
+			color:red;font-size:20px;float: left;padding-top:40px;
+		}
+		.div_1_p a{
+			color:red;float: right;
+		}
+		.div_1_1{
+			width:80px;height:30px;font-size:20px;float: right;padding-top:40px;
+		}
+		.div_d{
+			width:300px;float: right;
+		}
+		.login_div{
+			width:400px;height:400px;position:absolute;left:500px;top:100px;
+			box-shadow:10px 10px 10px black;z-index:10;
+			display:none;background-color: white;
+		}
+		.uesrname{
+			width:200px;height:25px;margin-top:50px;
+		}
+		.password{
+			width:200px;height:25px;margin-top:50px;
+		}
+		.code{
+			width:150px;height:25px;margin-top:50px;
+		}
+		.code_div{
+			width:75px;height:35px;margin-top:-35px;
+			margin-left:270px;
+		}
+		.submit_login{
+			width:80px;height:30px;margin-left:80px;
+		}
+		.button_registered{
+			width:80px;height:30px;margin-left:20px;
+		}
+		.registered_div{
+			width:600px;height:600px;box-shadow:10px 10px 10px black;
+			position:absolute;left:400px;top:50px;z-index:10;
+			display: none;background-color: white;
+		}
+		.span{
+			margin-left:80px;
+		}
+		.box{
+			width:200px;height:20px;margin-top:50px;
+		}
+		.box{
+			width:200px;height:20px;margin-top:50px;
+		}
+		.registered_submit{
+			margin-top:60px;margin-left:160px;width:200px;
+			height:40px;background-color: red;
+		}
+		.code_div1{
+			width:75px;height:35px;margin-top:-30px;
+			margin-left:370px;
+		}
+		.hidden_div{
+			position:absolute;left:0px;top:0px;
+			z-index: 5;background-color: gray;opacity:0.1;
+		}

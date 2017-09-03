@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+宝宝生长记录模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.RecordMapper">
+
+    <!--   添加一个宝宝生长记录-->
+    <insert id="addRecord" parameterType="com.DearBaby.www.entity.Record">
+        insert into record(record_height,record_weight,record_touwei,baby_id,record_time) value(#{record_height},#{record_weight},#{record_touwei},#{baby_id},#{record_time})
+    </insert>
+
+    <!--  通过宝宝ID 查询宝宝的生长记录-->
+    <select id="selectRecord" parameterType="java.lang.Integer" resultType="com.DearBaby.www.entity.Record">
+       SELECT * from record where db_status=0 and baby_id=#{baby_id} ORDER BY record_time desc
+   </select>
+    <!-- 通过宝宝生长记录ID 删除宝宝生长记录-->
+    <update id="deleteRecord" parameterType="java.lang.Integer">
+      UPDATE  record  SET db_status=1  where record_id= #{0};
+    </update>
+</mapper>

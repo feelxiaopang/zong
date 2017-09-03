@@ -1,0 +1,11 @@
+* {
+    margin: 0px auto;
+    padding: 0px;
+}
+a{
+    text-decoration: none;
+}
+
+input{
+    cursor: pointer;
+}

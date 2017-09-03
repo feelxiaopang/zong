@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="xyz.next.mapper.UsersMapper">
+
+<insert id="insertUser" parameterType="xyz.next.model.Users">
+	insert into users (username,password,nickname) values(#{username},#{password},#{nickname})
+</insert>
+<select id="selectUser" parameterType="Long" resultType="xyz.next.model.Users">
+	select * from users where id=#{0}
+</select>
+  
+  <!-- resultType：用于单一的表查询，默认表字段名称与对象属性名称一致，如果不一致需要使用 as（别名）
+    resultType：用于复杂的表查询，用于表字段与对象的映射
+    resultMap 返回数据的映射关系
+    type：返回类型  id:用于在查询中resultMap的匹配
+    id:id映射 javaType：java中属性的类型
+    property: java中对应的属性
+    colum：表中字段名  -->
+ <resultMap type="xyz.next.model.Users" id="userMap">
+ 	<id property="id" column="id" javaType="java.lang.Long"/>
+ 	<result property="username" column="username" javaType="java.lang.String"/>
+ 	<result property="password" column="password" javaType="java.lang.String"/>
+ 	<result property="nickname" column="nickname" javaType="java.lang.String"/>
+ </resultMap>
+ </mapper>

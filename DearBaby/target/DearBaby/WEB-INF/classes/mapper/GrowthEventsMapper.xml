@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+宝宝成长事件模块mapper配置文件
+-->
+<mapper namespace="com.DearBaby.www.mapper.GrowthEventsMapper">
+    <!-- 查询所有的宝宝成长事件 -->
+    <select id="selectAllEvents" resultType="com.DearBaby.www.entity.GrowthEvents">
+     select * from growth_events where db_status = 1 and event_first != '0' and baby_id = #{0} ;
+</select>
+
+    <!-- 新增宝宝成长事件-->
+    <insert id="insertEvent" parameterType="com.DearBaby.www.entity.GrowthEvents">
+        INSERT INTO growth_events (event_time,event_content,event_level, event_address, baby_id, event_first,event_photo) VALUES
+    ( #{event_time},#{event_content},#{event_level},#{event_address},#{baby_id},#{event_first},#{event_photo})
+</insert>
+
+    <!-- 查询所有的宝宝成长事件 -->
+    <select id="selectEvents" resultType="com.DearBaby.www.entity.GrowthEvents">
+        select * from growth_events where db_status = 1 and baby_id = #{0} ORDER by event_time desc;
+    </select>
+
+
+</mapper>
